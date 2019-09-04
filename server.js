@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/users', (req, res, next) => {
   try {
-    console.log('users');
+    res.send(db.findAllUsers());
   } catch(ex) {
     next(ex);
   }
@@ -21,4 +21,7 @@ app.get('/api/departments', (req, res, next) => {
   } catch(ex) {
     next(ex);
   }
-})
+});
+
+db.sync()
+  .then(() => app.listen(3000));

@@ -1,21 +1,23 @@
 const uuid = require("uuid");
 const pg = require("pg");
 const faker = require("faker");
+const { Client } = pg;
 
-const client = pg.client("postgres://localhost/acme.db");
+const client = new Client("postgres://localhost/acme_db");
 
 client.connect();
 
 const dep_id1 = uuid.v4();
 const dep_id2 = uuid.v4();
 const dep_id3 = uuid.v4();
-const dep_id3 = uuid.v4();
+const dep_id4 = uuid.v4();
 
 const generateUser = () => {
   const user = {};
   user.id = uuid.v4();
   user.name = faker.name.findName();
   user.bio = faker.lorem.sentence();
+  return user;
 };
 
 const user1 = generateUser();
@@ -54,6 +56,16 @@ const sync = async () => {
   await client.query(SQL);
 };
 
+const findAllUsers = async () => {
+  await client.query(`SELECT * FROM users;`);
+}
+
+const findAllDepartments = async () => {
+  await client.query(`SELECT * FROM departments;`);
+}
+
 module.exports = {
-  sync
+  sync,
+  findAllUsers,
+  findAllDepartments
 };
