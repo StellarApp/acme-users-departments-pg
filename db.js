@@ -37,6 +37,7 @@ const SQL = `
     CREATE TABLE users(
         id UUID PRIMARY KEY,
         name VARCHAR(255) NOT NULL UNIQUE,
+        bio VARCHAR(255),
         department_id UUID REFERENCES department(id)
     );
 
@@ -45,10 +46,10 @@ const SQL = `
     INSERT INTO department(id, name) VALUES('${dep_id3}', 'MARKETING');
     INSERT INTO department(id, name) VALUES('${dep_id4}', 'IT');
 
-    INSERT INTO users(id, name, department) VALUES('${user1.id}', '${user1.name}', '${user1.bio}', '${dep_id1}');
-    INSERT INTO users(id, name, department) VALUES('${user2.id}', '${user2.name}', '${user2.bio}', '${dep_id2}');
-    INSERT INTO users(id, name, department) VALUES('${user3.id}', '${user3.name}', '${user3.bio}', '${dep_id3}');
-    INSERT INTO users(id, name, department) VALUES('${user4.id}', '${user4.name}', '${user4.bio}', '${dep_id4}');
+    INSERT INTO users(id, name, bio, department_id) VALUES('${user1.id}', '${user1.name}', '${user1.bio}', '${dep_id1}');
+    INSERT INTO users(id, name, bio, department_id) VALUES('${user2.id}', '${user2.name}', '${user2.bio}', '${dep_id2}');
+    INSERT INTO users(id, name, bio, department_id) VALUES('${user3.id}', '${user3.name}', '${user3.bio}', '${dep_id3}');
+    INSERT INTO users(id, name, bio, department_id) VALUES('${user4.id}', '${user4.name}', '${user4.bio}', '${dep_id4}');
 
 `;
 
