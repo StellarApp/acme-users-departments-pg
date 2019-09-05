@@ -1,27 +1,35 @@
-const express = require('express');
-const path = require('path');
-const db = require('./db');
+const express = require("express");
+const path = require("path");
+const db = require("./db");
 const app = express();
+const PORT = 3000;
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-})
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
-app.get('/api/users', (req, res, next) => {
+app.get("/api/users", async (req, res, next) => {
   try {
-    res.send(db.findAllUsers());
-  } catch(ex) {
+    res.send(await db.findAllUsers());
+  } catch (ex) {
     next(ex);
   }
 });
 
-app.get('/api/departments', (req, res, next) => {
+app.get("/api/departments", async (req, res, next) => {
   try {
-    console.log('departments');
-  } catch(ex) {
+    res.send(await db.findAllDepartments());
+  } catch (ex) {
     next(ex);
   }
 });
 
 db.sync()
-  .then(() => app.listen(3000));
+  .then(() =>
+    app.listen(PORT, () => {
+      console.log(`Listening on port ${PORT}`);
+    })
+  )
+  .catch(ex => console.log(ex));
+//   .then(() => app.listen(3000, () => console.log("listening on port 3000")))
+//   .catch(ex => console.log(ex));
